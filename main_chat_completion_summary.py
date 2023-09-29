@@ -58,26 +58,13 @@ def main(
             if not len(prompt):
                 continue
             token_len = get_token_len(tokenizer, f'User: {prompt}')
-            if token_len > max_seq_len*0.7:
-                print(f'System: You exceed max_seq_len({max_seq_len*0,7:d}). Please type prompt less')
+            if token_len > max_seq_len:
+                print(f'System: You exceed max_seq_len({max_seq_len:d}). Please type prompt less')
                 continue
             break
         history.append({'token': token_len,
                         'dialog': {'role': 'user',
                                    'content': prompt}})
-
-        tokens_len = 0
-        cut = -1
-        for i in range(len(history)-1, -1, -1):
-            tokens_len = tokens_len + history[i]['token']
-            if tokens_len > max_seq_len:
-                cut = i
-                break
-        if cut >= 0:
-            ptr = (cut+1) + ((cut+1)%2)
-            print(f'System forgot {ptr} previous history')
-            for _ in range(ptr):
-                history.pop(0)
 
         results = generator.chat_completion(
             [[entry['dialog'] for entry in history]],  # type: ignore
@@ -91,9 +78,20 @@ def main(
         history.append({'token': get_token_len(tokenizer, f'Assistant: {response["content"]}'),
                         'dialog': {'role': 'assistant',
                                    'content': response['content']}})
-
         print(f'{history[-1]["dialog"]["role"]}: {history[-1]["dialog"]["content"]}')
         print()
+
+        prompt = 'Can you summarize our talks?'
+        history.append({'token': get_token_len(tokenizer, f'User: {prompt}'),
+                        'dialog': {'role': 'user',
+                                   'content': prompt}})
+
+        results = generator.chat_completion(
+            [[entry['dialog'] for entry in history]],  # type: ignore
+            max_gen_len=max_gen_len,
+            temperature=temperature,
+            top_p=top_p,
+        )
 
 
 if __name__ == "__main__":
