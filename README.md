@@ -16,6 +16,11 @@
 
 3. Clone the [llama repo](https://github.com/facebookresearch/llama)
 
+```bash
+cd bitsql-llm
+git clone https://github.com/facebookresearch/llama.git
+```
+
 4. Run `main_chat_completion.py`
 
 ```bash
