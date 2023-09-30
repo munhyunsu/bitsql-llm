@@ -21,7 +21,15 @@ cd bitsql-llm
 git clone https://github.com/facebookresearch/llama.git
 ```
 
-4. Run `main_chat_completion.py`
+4. Install `llama`
+
+```bash
+cd llama # .../bitsql-llm/llama
+pip3 install --upgrade pip wheel
+pip3 install -e .
+```
+
+5. Run `main_chat_completion.py`
 
 ```bash
 torchrun --nproc_per_node 1 example_chat_completion.py --ckpt_dir Llama-2-7b-chat/ --tokenizer_path ./Llama-2-7b-chat/tokenizer.model --max_seq_len 512 --max_batch_size 6
