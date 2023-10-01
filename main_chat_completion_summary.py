@@ -5,8 +5,8 @@ from typing import List, Dict, Optional
 
 import fire
 
-from llama.llama import Llama, Dialog
-from llama.llama.tokenizer import Tokenizer
+from llama import Llama, Dialog
+from llama.tokenizer import Tokenizer
 
 
 def get_token_len(tokenizer: Tokenizer, content: str) -> int:
