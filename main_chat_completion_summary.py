@@ -82,7 +82,6 @@ def main(
         print()
 
         prompt = 'Can you summarize our talks?'
-        history.clear()
         history.append({'token': get_token_len(tokenizer, f'User: {prompt}'),
                         'dialog': {'role': 'user',
                                    'content': prompt}})
@@ -97,6 +96,9 @@ def main(
         history.append({'token': get_token_len(tokenizer, f'Assistant: {response["content"]}'),
                         'dialog': {'role': 'assistant',
                                    'content': response['content']}})
+        forget = len(history)-2
+        for _ in range(forget):
+            history.pop(0)
 
 
 if __name__ == "__main__":
