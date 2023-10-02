@@ -82,6 +82,7 @@ def main(
         print()
 
         prompt = 'Can you summarize our talks?'
+        history.clear()
         history.append({'token': get_token_len(tokenizer, f'User: {prompt}'),
                         'dialog': {'role': 'user',
                                    'content': prompt}})
@@ -92,6 +93,10 @@ def main(
             temperature=temperature,
             top_p=top_p,
         )
+        response = results[0]['generation']
+        history.append({'token': get_token_len(tokenizer, f'Assistant: {response["content"]}'),
+                        'dialog': {'role': 'assistant',
+                                   'content': response['content']}})
 
 
 if __name__ == "__main__":
