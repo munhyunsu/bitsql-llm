@@ -29,10 +29,17 @@ pip3 install --upgrade pip wheel
 pip3 install -e .
 ```
 
-5. Run `main_chat_completion.py`
+5. Download model and tokenizer at `llama` directory
+
+```
+git clone git@hf.co:meta-llama/Llama-2-7b-chat
+```
+
+6. Run `main_chat_completion.py`
 
 ```bash
-torchrun --nproc_per_node 1 example_chat_completion.py --ckpt_dir Llama-2-7b-chat/ --tokenizer_path ./Llama-2-7b-chat/tokenizer.model --max_seq_len 512 --max_batch_size 6
+cd .. # .../bitsql-llm
+torchrun --nproc_per_node 1 main_chat_completion_cli.py --ckpt_dir ./Llama-2-7b-chat/ --tokenizer_path ./Llama-2-7b-chat/tokenizer.model --max_seq_len 512 --max_batch_size 6
 ```
 
 
