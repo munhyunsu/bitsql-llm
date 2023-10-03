@@ -81,7 +81,7 @@ def main(
         print(f'{history[-1]["dialog"]["role"]}: {history[-1]["dialog"]["content"]}')
         print()
 
-        prompt = 'Can you summarize our talks?'
+        prompt = 'Can you itemize and summarize our conversation?'
         history.append({'token': get_token_len(tokenizer, f'User: {prompt}'),
                         'dialog': {'role': 'user',
                                    'content': prompt}})
